@@ -1,0 +1,20 @@
+---
+title: My Document
+author: Deden Istiawan-Institut Teknologi Statistika dan Bisnis Muhammadiyah
+date: "r Sys.Date()"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+bibliography: references.bib
+---
+
+{=html}
+<style>
+body{
+text-align: justify}
+</style>
+
+{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
