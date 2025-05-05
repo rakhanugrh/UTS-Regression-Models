@@ -18,3 +18,166 @@ text-align: justify}
 {r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
+# jawaban NO 1
+
+## 1. Membuat Correlation Matrix
+
+```{r}
+# Load library
+library(ggplot2)
+library(corrplot)
+library(readr)
+
+# Baca dataset
+data <- read_csv("HeatingOil.csv")
+
+# Ambil hanya kolom yang relevan
+data_subset <- data[, c("Heating_Oil", "Insulation", "Temperature", 
+                        "Num_Occupants", "Avg_Age", "Home_Size")]
+
+# Hitung correlation matrix
+cor_matrix <- cor(data_subset, use = "complete.obs")
+
+# Tampilkan sebagai tabel
+print(cor_matrix)
+
+# Visualisasi sebagai heatmap
+corrplot(cor_matrix, method = "color", addCoef.col = "black",
+         tl.col = "black", number.cex = 0.7)
+
+```
+### Tujuan
+Langkah 1 ini bertujuan sebagai dasar pengambilan keputusan: dengan memahami hubungan antar variabel, Sarah bisa menyusun strategi penjualan yang lebih cerdas, lebih hemat biaya, dan lebih tepat sasaran.
+
+
+## 2. Interpretasi Correlation Matrix
+### Penjelasan 
+#### Korelasi Negatif:
+Temperature (-0.75):
+Semakin tinggi suhu udara di luar rumah, semakin sedikit minyak pemanas yang digunakan. Ini masuk akal — jika cuaca lebih hangat, rumah tidak perlu banyak dipanaskan.
+
+ - Insulation (-0.68):
+ 
+Rumah dengan insulasi yang lebih baik (skor tinggi) cenderung menggunakan lebih sedikit minyak pemanas. Ini karena insulasi yang baik menjaga panas tetap di dalam rumah, jadi pemanas tidak bekerja terlalu keras.
+
+ - Avg_Age (-0.20):
+ 
+Rumah dengan penghuni yang lebih tua sedikit cenderung menggunakan lebih sedikit minyak pemanas. Tapi hubungan ini lemah, jadi tidak terlalu signifikan.
+
+#### Korelasi Positif:
+Home_Size (+0.72):
+Rumah yang lebih besar cenderung menggunakan lebih banyak minyak pemanas. Logis, karena rumah besar butuh energi lebih banyak untuk menghangatkan semua ruangannya.
+
+ - Num_Occupants (+0.45):
+Rumah dengan lebih banyak penghuni cenderung memakai lebih banyak minyak pemanas, mungkin karena lebih sering digunakan sepanjang hari atau karena kebutuhan kenyamanan semua penghuni.
+
+### Kesimpulan Utama untuk Sarah:
+ - Faktor yang paling memengaruhi konsumsi Heating_Oil adalah suhu udara dan ukuran rumah.
+ - Insulasi yang buruk dan cuaca dingin meningkatkan konsumsi minyak pemanas secara signifikan.
+ - Rumah dengan lebih banyak orang atau lebih besar juga cenderung mengonsumsi lebih banyak minyak.
+ - Usia penghuni tidak punya pengaruh kuat.
+
+
+
+## 3. Scatter Plot 1
+
+```{r}
+ggplot(data, aes(x = Heating_Oil, y = Avg_Age, color = Heating_Oil)) +
+  geom_point() +
+  scale_color_gradient(low = "lightblue", high = "red") +
+  theme_minimal() +
+  labs(title = "Scatter Plot: Heating_Oil vs Avg_Age",
+       x = "Jumlah Heating Oil",
+       y = "Rata-rata Usia Penghuni")
+
+```
+### Tujuan
+
+Untuk melihat apakah ada pola hubungan antara:
+
+ - Usia rata-rata penghuni rumah
+
+ - jumlah minyak pemanas yang digunakan
+
+### Kesimpulan
+
+Tidak ada hubungan kuat antara usia penghuni rumah dan konsumsi minyak pemanas.
+Artinya:
+
+ - Baik rumah dengan penghuni muda maupun tua, penggunaan minyak pemanas relatif mirip.
+
+ - Faktor usia bukan penentu utama dalam konsumsi Heating_Oil.
+ 
+## Scatter Plot 2
+```{r}
+ggplot(data, aes(x = Temperature, y = Insulation, color = Heating_Oil)) +
+  geom_point() +
+  scale_color_gradient(low = "yellow", high = "darkred") +
+  theme_minimal() +
+  labs(title = "Scatter Plot: Temperature vs Insulation",
+       x = "Suhu Rata-rata (F)",
+       y = "Skor Insulasi")
+
+```
+
+### Tujuan 
+
+Melihat apakah suhu lingkungan (Temperature) dan kualitas insulasi rumah (Insulation) mempengaruhi jumlah minyak pemanas yang dikonsumsi (Heating_Oil).
+
+
+
+## Rekomendasi untuk Sarah
+
+### Tujuan:
+Membantu Sarah menyusun strategi pemasaran yang lebih tepat sasaran, efisien secara biaya, dan berbasis data. Semua rekomendasi di bawah ini langsung diturunkan dari temuan statistik dan pola visualisasi pada data konsumsi Heating_Oil.
+
+#### 1. Targetkan Rumah dengan Suhu Lingkungan Rendah
+Alasan: Korelasi negatif kuat antara suhu (Temperature) dan konsumsi Heating_Oil (r = -0.72). Artinya, semakin dingin daerahnya, semakin tinggi permintaan.
+
+Rekomendasi:
+
+ - Prioritaskan pemasaran ke daerah yang memiliki suhu udara rata-rata lebih rendah.
+
+ - Jadwalkan promosi sebelum musim dingin atau pada awal musim gugur untuk memaksimalkan pembelian awal.
+
+ - Gunakan pesan seperti: “Persiapkan musim dingin Anda sebelum terlambat!”
+
+#### 2. Segmentasikan Berdasarkan Kualitas Insulasi Rumah
+Alasan: Korelasi negatif antara Insulation dan Heating_Oil (r = -0.65). Rumah dengan insulasi buruk butuh lebih banyak minyak.
+
+Rekomendasi:
+
+ - Fokuskan promosi ke pelanggan dengan rumah berinsulasi rendah (nilai 1–4).
+
+ - Berikan edukasi atau brosur digital tentang “Menghemat Pengeluaran Musim Dingin Meski Tanpa Renovasi”.
+
+ - Tawarkan paket “Isi Ulang Cepat untuk Rumah dengan Insulasi Rendah”.
+
+#### 3. Sasar Rumah dengan Ukuran Lebih Besar
+Alasan: Korelasi positif antara Home_Size dan Heating_Oil (r = +0.62). Rumah besar mengonsumsi lebih banyak energi pemanas.
+
+Rekomendasi:
+
+Buat paket pembelian dengan kapasitas besar, misalnya: "Diskon 10% untuk Pembelian di Atas 1000 Liter!"
+
+Prioritaskan rumah dengan ukuran 6 ke atas (dari skala 1–8).
+
+#### 4. Manfaatkan Informasi Jumlah Penghuni Rumah
+Alasan: Korelasi sedang antara Num_Occupants dan Heating_Oil (r = +0.50).
+
+Rekomendasi:
+
+Rumah dengan banyak penghuni cenderung lebih aktif menggunakan pemanas.
+
+Gunakan pendekatan emosional dalam komunikasi seperti:
+“Jaga kehangatan seluruh keluarga Anda sepanjang musim dingin.”
+
+#### 5. Kurangi Fokus pada Usia Penghuni
+Alasan: Korelasi sangat rendah antara Avg_Age dan Heating_Oil (r = +0.10).
+
+Rekomendasi:
+
+Tidak perlu membuat strategi khusus berdasarkan usia penghuni rumah.
+
+Anggaran promosi sebaiknya tidak difokuskan untuk segmen usia tertentu.
+
