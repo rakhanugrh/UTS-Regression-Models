@@ -377,6 +377,36 @@ tertentu.</p>
 </div>
 </div>
 </div>
+<div id="jawaban-no-2" class="section level1">
+<h1>Jawaban No 2</h1>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;HeatingOil.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Heating_Oil <span class="sc">~</span> Insulation <span class="sc">+</span> Temperature <span class="sc">+</span> Num_Occupants <span class="sc">+</span> Avg_Age <span class="sc">+</span> Home_Size, <span class="at">data =</span> data)</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="fu">summary</span>(model)  <span class="co"># opsional: untuk melihat hasil regresi</span></span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = Heating_Oil ~ Insulation + Temperature + Num_Occupants + 
+##     Avg_Age + Home_Size, data = data)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -103.558  -11.999    0.544   11.764  128.215 
+## 
+## Coefficients:
+##                Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   135.48094    7.73091  17.525  &lt; 2e-16 ***
+## Insulation      3.32551    0.42044   7.910 5.78e-15 ***
+## Temperature    -0.86993    0.07114 -12.228  &lt; 2e-16 ***
+## Num_Occupants  -0.26896    0.40689  -0.661    0.509    
+## Avg_Age         1.96582    0.06523  30.137  &lt; 2e-16 ***
+## Home_Size       3.17151    0.31088  10.202  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 23.96 on 1212 degrees of freedom
+## Multiple R-squared:  0.8193, Adjusted R-squared:  0.8186 
+## F-statistic:  1099 on 5 and 1212 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">saveRDS</span>(model, <span class="at">file =</span> <span class="st">&quot;model_heating_oil.rds&quot;</span>)</span></code></pre></div>
+</div>
 </section>
 
 

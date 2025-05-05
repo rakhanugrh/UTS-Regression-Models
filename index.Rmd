@@ -181,3 +181,23 @@ Tidak perlu membuat strategi khusus berdasarkan usia penghuni rumah.
 
 Anggaran promosi sebaiknya tidak difokuskan untuk segmen usia tertentu.
 
+# Jawaban No 2
+
+```{r}
+data <- read.csv("HeatingOil.csv")
+
+```
+```{r}
+model <- lm(Heating_Oil ~ Insulation + Temperature + Num_Occupants + Avg_Age + Home_Size, data = data)
+summary(model)  # opsional: untuk melihat hasil regresi
+
+```
+```{r}
+saveRDS(model, file = "model_heating_oil.rds")
+
+```
+
+
+
+
+
